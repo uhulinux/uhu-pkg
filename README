@@ -1,0 +1,51 @@
+A dpkg a szkript indításakor két argumentumot ad. Ebből az első az igazán
+lényeges.
+
+A postinst szkriptnél úgy fest, hogy ez az argumentum minden esetben
+"configure". A szkript a csomag konfigurálásakor fut le. A csomag egyszerű
+kitömörítésekor (unpack) nem fut szkript.
+
+A postrm szkriptnél már bonyolultabb a helyzet. Az argumentum lehet
+"remove", "purge" illetve "upgrade".
+
+A "purge" előtt minden esetben lefut a "remove". Ha tehát kiadjuk a "dpkg
+--purge csomi" parancsot, és csomi még telepítve van (nem "remove"
+állapotban), akkor lefut a postrm szkript előbb "remove", majd "purge"
+argumentummal.
+
+Na, akkor hajrá, bonyolítsuk el az életet. Tegyük fel, hogy egy csomag a
+telepítés során valamit meg akar csinálni, és eltávolításakor ennek
+ellenkezőjét tehetni. Ez lehet akár egy szimlink létrehozása, akár
+nemtomménmi, példaként vegyük a felhasználó létrehozását és törlését. Mint
+minden normális dolog, ez is olyan lépés, hogy a szkriptek hibával
+elszállnak, ha nem tudták megtenni, amit akartak. Tehát a useradd--groupadd
+számára hiba, ha a user már létezik, míg a userdel--groupdel számára hiba,
+ha a user nem létezik.
+
+A következőkben egy rövid bizonyítást adunk arra, hogy például a useradd és
+userdel programokat nem lehet úgy elhelyezni a szkriptekben, hogy a dpkg
+azokat garantáltan felváltva hívja meg.
+
+Először is csomagfrissítéskor kötelező a felhasználót törölnie a régi
+csomagnak, és létrehoznia az újnak, mivel egyáltalán nem biztos, hogy a
+csoamg új változata pontosan ugyanazokat a felhasználókat tartalmazza.
+
+Ha egy csomagot sokszor egymás után unpackolunk, akkor minden esetben csak a
+postrm szkript fut le egy "upgrade" argumentummal, majd a csomag új
+változatának verziószámával. Amikor "upgrade" az első argumentum, akkor
+mindig van értelmes második argumentum is, így ezt kár tesztelni. A userdel
+progit tehát nem szabad lefuttatni ebben az esetben, hiszen akkor többször
+is lefuthat, köztes useradd nélkül.
+
+Viszont amikor rendesen telepítjük a csomagot, akkor is pontosan ezekkel az
+argumentumokkal fut le a postrm szkript, ilyenkor viszont ki kellene
+törölnie a felhasználót.
+
+Tanulság: a postinst és postrm szkriptekben fel kell készülnünk arra, hogy a
+hülye dpkg nem képes ezeket felváltva meghívni. Tehát mondjuk a useradd és
+userdel lépések közül legalább az egyiknek (praktikusan a userdel-nek)
+tolerálnia kell, ha már nem tudja megtenni, amit meg kell tennie.
+
+
+Hoppá, megoldás lehet a prerm szkript. Lásd README2 fájl.
+

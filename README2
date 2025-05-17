@@ -1,0 +1,51 @@
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+| régi állapot |                       |                       |                         |                         |
++-----------   |  Not installed        |  Unpacked             |  Installed              |  Config-files           |
+| akció      \ |                       |                       |                         |                         |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+|              |                       |                       | prerm upgrade új        |                         |
+|  unpack      | preinst install       | preinst upgrade régi  | preinst upgrade régi    | preinst install régi    |
+|              |                       | postrm upgrade új     | postrm upgrade új       |                         |
+|              |                       |                       |                         |                         |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+|              |                       |                       |                         |                         |
+|  configure   |   ---                 |                       |   ---                   |   ---                   |
+|              |                       |                       |                         |                         |
+|              |                       | postinst configure "" |                         |                         |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+|              |                       |                       | prerm upgrade új        |                         |
+|  install     | preinst install       | preinst upgrade régi  | preinst upgrade régi    | preinst install régi    |
+|              |                       | postrm upgrade új     | postrm upgrade új       |                         |
+|              | postinst configure "" | postinst configure "" | postinst configure régi | postinst configure régi |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+|              |                       |                       | prerm remove            |                         |
+|  remove      |   ---                 |                       |                         |   ---                   |
+|              |                       | postrm remove         | postrm remove           |                         |
+|              |                       |                       |                         |                         |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+|              |                       |                       | prerm remove            |                         |
+|  purge       |   ---                 |                       |                         |                         |
+|              |                       | postrm remove         | postrm remove           |                         |
+|              |                       | postrm purge          | postrm purge            | postrm purge            |
++--------------+-----------------------+-----------------------+-------------------------+-------------------------+
+
+régi = a csomag régi verziója
+új   = a csomag új verziója
+""   = üres argumentum
+---  = az adott helyzetben az a lépés nem értelmezhető
+
+
+Az üres argumentum helyenként mégsem az. Például install, majd unpack, majd
+configure lépések esetén a configure-nál a postinst szkript megkapja a régi
+verziót argumentumként.
+
+A postinst--prerm szkriptek szépen párban állnak, a postinst mindig akkor
+fut le, amikor a csomag használható állapotba kerül, a prerm pedig pont az
+innen kikerüléskor. Tehát szerintem user létrehozását és törlését ide
+kellene rakni, sokkal inkább, mint a postinst--postrm szkriptekbe, mert ezek
+lefutási sorrendje össze-vissza is lehet (például sokszori unpack esetén
+sokszor lefut a postrm, de a postinst egyszer sem).
+
+Sajnos a preinst--postrm lépésről ez nem mondható el ilyen szépen, pláne
+mivel egy purge lépésnél a postrm általában duplán fut le (fujj).
+

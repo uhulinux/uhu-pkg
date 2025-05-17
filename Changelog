@@ -1,0 +1,89 @@
+
+------------------------------------------------------------------------
+        | rezso | 2021-08-24
+        
+users, groups: system users, groups
+
+0.12
+------------------------------------------------------------------------
+        | rezso | 2018-02-09
+        
+readline hívás módosítása
+
+0.10
+------------------------------------------------------------------------
+        | peritus | 2018-02-06
+        
+64 bites alkalmazhatóság
+
+------------------------------------------------------------------------
+r14 | egmont | 2005-08-31 16:09:01 +0200 (sze, 31 aug 2005) | 1 line
+Changed paths:
+   A /tags/0.8 (from /trunk:13)
+
+0.8
+------------------------------------------------------------------------
+r13 | egmont | 2005-08-31 16:08:54 +0200 (sze, 31 aug 2005) | 2 lines
+Changed paths:
+   M /trunk/README
+   M /trunk/README2
+   M /trunk/uhu-pkg
+   M /trunk/uhu-stat.c
+
+- UTF-8
+
+------------------------------------------------------------------------
+r11 | egmont | 2004-06-07 14:09:10 +0200 (h, 07 jún 2004) | 2 lines
+Changed paths:
+   M /trunk/uhu-pkg
+
+- ignore if uhu-stat fails
+
+------------------------------------------------------------------------
+r9 | pozsy | 2004-02-24 13:43:53 +0100 (k, 24 febr 2004) | 2 lines
+Changed paths:
+   M /trunk/uhu-pkg
+
+- remove leftover non-char-device /dev/null
+
+------------------------------------------------------------------------
+r7 | egmont | 2003-10-30 15:41:14 +0100 (cs, 30 okt 2003) | 2 lines
+Changed paths:
+   M /trunk/uhu-pkg
+
+stupid typo fixed
+
+------------------------------------------------------------------------
+r5 | egmont | 2003-10-30 15:24:26 +0100 (cs, 30 okt 2003) | 2 lines
+Changed paths:
+   M /trunk/uhu-pkg
+
+/dev/null létezésének garantálása a szkriptek futtatásakor
+
+------------------------------------------------------------------------
+r3 | pozsy | 2003-07-19 20:13:53 +0200 (szo, 19 júl 2003) | 1 line
+Changed paths:
+   D /trunk/VERSION
+
+remove VERSION
+------------------------------------------------------------------------
+r2 | pozsy | 2003-07-19 13:30:43 +0200 (szo, 19 júl 2003) | 1 line
+Changed paths:
+   D /Makefile
+   D /README
+   D /README2
+   D /VERSION
+   A /branches
+   A /tags
+   A /trunk
+   A /trunk/Makefile (from /Makefile:1)
+   A /trunk/README (from /README:1)
+   A /trunk/README2 (from /README2:1)
+   A /trunk/VERSION (from /VERSION:1)
+   A /trunk/uhu-pkg (from /uhu-pkg:1)
+   A /trunk/uhu-stat.c (from /uhu-stat.c:1)
+   D /uhu-pkg
+   D /uhu-stat.c
+
+new repository layout
+------------------------------------------------------------------------
